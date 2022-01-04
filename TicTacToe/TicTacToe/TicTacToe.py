@@ -1,20 +1,44 @@
 #Variables
-game_list = [0,1,2]
+game_list = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
 game_on = True
+
+def clear():
+    print("\n"*100)
 
 def display(game_list: list):
     print("Here is the current list")
-    print(game_list)
+    print(game_list[7] + '|' + game_list[8] + '|' + game_list[9])
+    print(game_list[4] + '|' + game_list[5] + '|' + game_list[6])
+    print(game_list[1] + '|' + game_list[2] + '|' + game_list[3])
+    
+
+def player_input():
+
+    marker = ' '
+
+    while marker != 'X' or 'O':
+        marker = input("Please choose your marker (X or O)")
+
+    player1 = marker
+
+    if player1 == 'X':
+        player2 = 'O'
+    else:
+        player2 = 'X'
+
+    return (player1,player2)
+
+
 
 def position_choice():
 
     choice = 'wrong'
 
-    while choice not in ['0','1','2']:
+    while choice not in range(1-10):
         
-        choice = input("Pick a position (0,1,2): ")
+        choice = input("Pick a position (1-9): ")
 
-        if choice not in ['0','1','2']:
+        if choice not in range(1-10):
             print("Sorry, invalid choice!")
 
     return int(choice)
@@ -58,12 +82,14 @@ def user_choice():
 
 #Function Calls
 while game_on:
-    display(game_list)
-
-    position = position_choice()
-
-    game_list = replacement_choice(game_list, 1)
 
     display(game_list)
+    player_input()
 
-    game_on = gameon_choice()
+    #position = position_choice()
+
+    #game_list = replacement_choice(game_list, 1)
+
+    #display(game_list)
+
+    #game_on = gameon_choice()
