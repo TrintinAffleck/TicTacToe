@@ -1,5 +1,7 @@
+import random
+
 #Variables
-game_list = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
+game_list = [' ','X',' ',' ',' ',' ',' ',' ',' ',' ']
 game_on = True
 
 def clear():
@@ -56,36 +58,43 @@ def position_choice(position: int):
     position = int(choice)
     return position
 
-def replacement_choice(game_list, position):
-    user_placement = input("Type a string to place at position: ")
 
-    game_list[position] = user_placement
-    return game_list
-
-def win_check(board, mark):
+def win_check(board, mark: str):
     board = game_list
     mark = player_input()
+    print(mark)
     playerwon = False
     #Checking for X or O's in a row
-    if board[1] == board[2] == board[3]: #BottomRow
+    if board[1] == board[2] == board[3] == mark: #BottomRow
         playerwon = True
-    if board[1] == board[4] == board[7]: #LeftSide
+    if board[1] == board[4] == board[7] == mark: #LeftSide
         playerwon = True
-    if board[3] == board[6] == board[9]: #RightSide
+    if board[3] == board[6] == board[9] == mark: #RightSide
         playerwon = True
-    if board[7] == board[8] == board[9]: #TopRow
+    if board[7] == board[8] == board[9] == mark: #TopRow
         playerwon = True
-    if board[7] == board[5] == board[3]: #LeftDiagonal
+    if board[7] == board[5] == board[3] == mark: #LeftDiagonal
         playerwon = True
-    if board[9] == board[5] == board[1]: #RightDiangonal
+    if board[9] == board[5] == board[1] == mark: #RightDiangonal
         playerwon = True
-    if board[4] == board[5] == board[6]: #HorizonalRow
+    if board[4] == board[5] == board[6] == mark: #HorizonalRow
         playerwon = True
-    if board[2] == board[5] == board[8]: #VerticalRow
+    if board[2] == board[5] == board[8] == mark: #VerticalRow
         playerwon = True
+
+    if playerwon == False:
+        print("Its a Tie!")
+        gameon_choice()
     
 
-
+def choose_first():
+    return random.randint(1,2)
+    
+def space_check(board, position: int) -> bool:
+    board = game_list
+    if board[position] in ['X', 'O']:
+        return True
+    return False
 
 def gameon_choice():
 
@@ -98,7 +107,7 @@ def gameon_choice():
         if choice not in ['Y','y','N','n']:
             print("Please choose Y or N ")
 
-    if choice == 'Y' or 'y':
+    if choice in ['Y','y']:
         return True
     return False
 
@@ -118,15 +127,11 @@ def user_choice():
 
 #Function Calls
 while game_on:
-
-    display(game_list)
-    player_input()
-    place_marker(game_list,'S',1)
-
-    #position = position_choice()
-
-    #game_list = replacement_choice(game_list, 1)
-
+    
     #display(game_list)
-
+    #player_input()
+    #place_marker(game_list,'S',1)
+    #win_check(game_list," ")
+    #gameon_choice()
+    #space_check(game_list,2)
     #game_on = gameon_choice()
