@@ -60,25 +60,30 @@ def choose_first():
     
 
 def space_check(board, position: int) -> bool:
+    '''
+    OUTPUT
+    Returns True if the position on the board is empty
+    Returns False if the position is not an empty string/space
+    '''
     return board[position] == ' '
 
 def full_board_check(board):
     board = game_list
+    for i in range(1,10):
+        if space_check(board,i): #BOARD HAS IS NOT FULL
+            return False
+    #BOARD IS FULL
+    return True
 
 
+def pos_choice(board):
+    #Asking for position check from user
+    pos = 'Placeholder'
+    while int(pos)not in range(1,10) or not space_check(board, pos):
+        pos = int(input("Please enter an available position on the board (1-9): "))
 
-def position_choice(position: int):
-
-    choice = 'wrong'
-
-    while choice not in range(1-10):
-        
-        choice = input("Pick a position (1-9): ")
-
-        if choice not in range(1-10):
-            print("Sorry, invalid choice!")
-    position = int(choice)
-    return position
+    print(pos)
+    return pos
 
 def gameon_choice():
 
@@ -93,31 +98,18 @@ def gameon_choice():
 
     if choice in ['Y','y']:
         return True
+    game_on = False
     return False
-
-def user_choice():
-
-    #Validating User Input
-    while True:
-        choice = input('Please enter a number. (1-9)')
-        #Digit Check
-        if choice.isdigit():
-            #Range Check
-            if int(choice) in range(1,10):
-                return int(choice)
-            print('You are out of acceptable range. (1-9)')
-            continue
-        print('Sorry! that was not a digit.')
-    return int(choice)
-
+pos_choice(game_list)
 #Function Calls
-while game_on:
-    
-    display(game_list)
-    player_input()
-    place_marker(game_list, 'X' , 2)
+#while game_on:
+    #display(game_list)
+    #full_board_check(game_list)
+    #player_input()
+    #place_marker(game_list, 'X' , 2)
     #win_check(game_list," ")
     #gameon_choice()
     #space_check(game_list,1)
     #full_board_check(game_list)
+    #pos_choice(game_list)
     #game_on = gameon_choice()
