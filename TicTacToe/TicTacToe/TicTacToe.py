@@ -48,9 +48,6 @@ def win_check(board, mark: str):
     board[4] == board[5] == board[6] == mark or #HorizonalRow
     board[2] == board[5] == board[8] == mark) #VerticalRow
 
-    if playerwon == False:
-        print("Its a Tie!")
-        gameon_choice()
 
 def choose_first():
     rand = random.randint(1,2)
@@ -75,41 +72,32 @@ def full_board_check(board):
     #BOARD IS FULL
     return True
 
-
 def pos_choice(board):
     #Asking for position check from user
     pos = 'Placeholder'
-    while int(pos)not in range(1,10) or not space_check(board, pos):
-        pos = int(input("Please enter an available position on the board (1-9): "))
-
-    print(pos)
+    
+    while pos not in range(1,10) or str(pos).isdigit() == False or not space_check(board, pos): #If space is between 1-9 or not available
+        pos = input("Please enter an available position on the board (1-9): ")
+        if pos.isdigit() == True:
+            pos = int(pos)
+    print(type(pos))
     return pos
 
 def gameon_choice():
-
-    choice = 'wrong'
-
-    while choice not in ['Y','y','N','n']:
-        
-        choice = input("Keep Playing? (Y or N) ")
-
-        if choice not in ['Y','y','N','n']:
-            print("Please choose Y or N ")
-
-    if choice in ['Y','y']:
+    choice = input("Play again? (Yes or No) ")
+    if choice == 'Yes' or choice == 'yes':
         return True
-    game_on = False
     return False
-pos_choice(game_list)
+
 #Function Calls
-#while game_on:
-    #display(game_list)
-    #full_board_check(game_list)
-    #player_input()
-    #place_marker(game_list, 'X' , 2)
-    #win_check(game_list," ")
-    #gameon_choice()
-    #space_check(game_list,1)
-    #full_board_check(game_list)
-    #pos_choice(game_list)
-    #game_on = gameon_choice()
+while gameon_choice and game_on:
+    display(game_list)
+    full_board_check(game_list)
+    player_input()
+    place_marker(game_list, 'X' , 2)
+    win_check(game_list," ")
+    gameon_choice()
+    space_check(game_list,1)
+    full_board_check(game_list)
+    pos_choice(game_list)
+    gameon_choice
