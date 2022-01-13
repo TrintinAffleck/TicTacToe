@@ -1,0 +1,8 @@
+# TicTacToe
+Just a simple command line tic tac toe game using python
+For those that have never played the game is played on a 3x3 grid with 9 positions.
+In my game it is in the same order as a numpad with 789 at the top and 123 at the bottom row.
+The game will choose which player starts randomly.
+You choose your marker either an X or an O.
+Player then chooses where to place their X or O on the grid.
+3 X's or 3 O's in a row wins.
