@@ -2,7 +2,6 @@ import random
 
 #Variables
 game_list = [' ']*10
-game_on = True
 
 def clear():
     #To clear the screen
@@ -27,9 +26,8 @@ def player_input():
         marker = input("Player1: Choose Marker (X or O) ").upper()
 
     if marker == 'X':
-        return ('X','O')
+        return('X','O')
     return ('O','X')
-
 
 def place_marker(board, marker: str, position: int):
     board = game_list
@@ -74,14 +72,20 @@ def full_board_check(board):
 
 def pos_choice(board):
     #Asking for position check from user
-    pos = 'Placeholder'
-    
-    while pos not in range(1,10) or str(pos).isdigit() == False or not space_check(board, pos): #If space is between 1-9 or not available
+    pos = 0
+    ranges = ['1','2','3','4','5','6','7','8','9'] #Positions on the board
+    while pos not in ranges or space_check(board, pos) == False: #If space is between 1-9 or not available
         pos = input("Please enter an available position on the board (1-9): ")
-        if pos.isdigit() == True:
+        if pos not in ranges:
+            print("Invalid position")
+        elif pos in ranges:
             pos = int(pos)
-    print(type(pos))
-    return pos
+            if space_check(board,pos): #return if there is space 
+                return pos
+            elif not space_check(board,pos): #continue the while loop if there is no space on the board
+                print('{} is not an available position'.format(pos))
+                continue
+    
 
 def gameon_choice():
     choice = input("Play again? (Yes or No) ")
@@ -90,14 +94,68 @@ def gameon_choice():
     return False
 
 #Function Calls
-while gameon_choice and game_on:
-    display(game_list)
-    full_board_check(game_list)
-    player_input()
-    place_marker(game_list, 'X' , 2)
-    win_check(game_list," ")
-    gameon_choice()
-    space_check(game_list,1)
-    full_board_check(game_list)
-    pos_choice(game_list)
-    gameon_choice
+while True:
+    #PLAYGAME
+    #SETTING UP THE BOARD
+    print("Welcome to Tic Tac Toe")
+
+    player1marker,player2marker = player_input()
+    turn = choose_first()
+    print(turn + ' will go first')
+
+    play_game = input("Ready to play? (y or n) ")
+
+    if play_game in ['Y','y']:
+        game_on = True
+    else:
+        game_on = False
+
+    while game_on:
+        #PLAYER1 TURN
+        if turn == 'Player 1':
+            #Show the board
+            display(game_list)
+            #Choose a position
+            print(f"{turn}s' turn")
+            p1pos = pos_choice(game_list)
+            #Place the marker on the position
+            place_marker(game_list,player1marker,p1pos)
+            #Check if they won
+            if win_check(game_list,player1marker):
+                display(game_list)
+                print("Player 1 has won!")
+                game_on = False
+            else:
+                #Or check if tie
+                if full_board_check(game_list):
+                    display(game_list)
+                    print("Its a tie!")
+                    game_on == False
+                    break
+                else:
+                    #No tie and no win? Next player
+                    turn = 'Player 2'
+        #PLAYER2 TURN
+        else:
+            display(game_list)
+            print(f"{turn} 's' turn")
+            p2pos = pos_choice(game_list)
+            place_marker(game_list,player2marker,p2pos)
+
+            if win_check(game_list,player2marker):
+                display(game_list)
+                print("Player 2 has won!")
+                game_on == False
+
+            else:
+                if full_board_check(game_list):
+                    display(game_list)
+                    print("Its a tie!")
+                    break
+                else:
+                    turn = 'Player 1'
+                    
+    #Leave the game
+    if not gameon_choice():
+        break
+    
